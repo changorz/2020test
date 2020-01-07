@@ -15,9 +15,9 @@ import javax.websocket.server.ServerEndpoint;
 import net.sf.json.JSONObject;
 
 @ServerEndpoint("/webSocket/{username}")
-public class WebSocket {
+public class MyWebSocket {
     private static int onlineCount = 0;
-    private static Map<String, WebSocket> clients = new ConcurrentHashMap<String, WebSocket>();
+    private static Map<String, MyWebSocket> clients = new ConcurrentHashMap<String, MyWebSocket>();
     private Session session;
     private String username;
 
@@ -28,6 +28,7 @@ public class WebSocket {
         addOnlineCount();
         clients.put(username, this);
         System.out.println("已连接");
+        session.getBasicRemote().sendText("，你好，欢迎连接WebSocket！");
     }
 
     @OnClose
@@ -56,7 +57,7 @@ public class WebSocket {
     public void sendMessageTo(String message, String To) throws IOException {
         // session.getBasicRemote().sendText(message);
         //session.getAsyncRemote().sendText(message);
-        for (WebSocket item : clients.values()) {
+        for (MyWebSocket item : clients.values()) {
             if (item.username.equals(To) )
                 item.session.getAsyncRemote().sendText(message);
         }
@@ -64,7 +65,7 @@ public class WebSocket {
 
 
     public void sendMessageAll(String message) throws IOException {
-        for (WebSocket item : clients.values()) {
+        for (MyWebSocket item : clients.values()) {
             item.session.getAsyncRemote().sendText(message);
         }
     }
@@ -76,15 +77,15 @@ public class WebSocket {
 
 
     public static synchronized void addOnlineCount() {
-        WebSocket.onlineCount++;
+        MyWebSocket.onlineCount++;
     }
 
 
     public static synchronized void subOnlineCount() {
-        WebSocket.onlineCount--;
+        MyWebSocket.onlineCount--;
     }
 
-    public static synchronized Map<String, WebSocket> getClients() {
+    public static synchronized Map<String, MyWebSocket> getClients() {
         return clients;
     }
 }

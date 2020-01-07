@@ -5,7 +5,7 @@ var username = "${loginUsername}"; // 获得当前登录人员的userName
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
     alert("浏览器支持Websocket")
-    websocket = new WebSocket('ws://'+host+'/mm-dorado/webSocket/'+username);
+    websocket = new WebSocket('ws://localhost/webSocket/user');
 } else {
     alert('当前浏览器 Not support websocket')
 }
