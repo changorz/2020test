@@ -8,8 +8,9 @@
       <list>
         <option value="$PROJECT_DIR$/01_demo/pom.xml" />
         <option value="$PROJECT_DIR$/02_webSocket/pom.xml" />
+        <option value="$PROJECT_DIR$/03_spingdatajpa/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

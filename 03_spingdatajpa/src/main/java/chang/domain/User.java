@@ -1,59 +1,40 @@
 package chang.domain;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-@Entity(name = "user")
+
+@Data
+@Entity
+@Table(name = "user")
 public class User {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
     private String password;
 
-    private String enable;
+    @Column(name = "enabled")
+    private String enabled;
 
+    @Column(name = "locked")
     private String locked;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEnable() {
-        return enable;
-    }
-
-    public void setEnable(String enable) {
-        this.enable = enable;
-    }
-
-    public String getLocked() {
-        return locked;
-    }
-
-    public void setLocked(String locked) {
-        this.locked = locked;
-    }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", enable='" + enable + '\'' +
+                ", enabled='" + enabled + '\'' +
                 ", locked='" + locked + '\'' +
                 '}';
     }
