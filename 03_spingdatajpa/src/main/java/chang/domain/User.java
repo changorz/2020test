@@ -4,6 +4,8 @@ package chang.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -27,6 +29,10 @@ public class User {
 
     @Column(name = "locked")
     private String locked;
+
+    @ManyToMany(mappedBy="users")
+    private Set<Role> roles = new HashSet<Role>(0);
+
 
     @Override
     public String toString() {
