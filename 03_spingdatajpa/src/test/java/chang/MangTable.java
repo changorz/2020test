@@ -1,11 +1,18 @@
 package chang;
 
+import chang.dao.RoleDao;
 import chang.dao.UserDao;
+import chang.domain.Role;
+import chang.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 /*
 
@@ -71,13 +78,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 	  		CascadeType.ALL		包含所有
 @OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
 
-
-
-
-
-
-
-
  */
 
 
@@ -89,11 +89,61 @@ public class MangTable {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private RoleDao roleDao;
+
+    /*
+    @ManyToMany
+	作用：用于映射多对多关系
+	属性：
+		cascade：配置级联操作。
+		fetch：配置是否采用延迟加载。
+    	targetEntity：配置目标的实体类。映射多对多的时候不用写。
+
+    @JoinTable
+        作用：针对中间表的配置
+        属性：
+            nam：配置中间表的名称
+            joinColumns：中间表的外键字段关联当前实体类所对应表的主键字段
+            inverseJoinColumn：中间表的外键字段关联对方表的主键字段
+
+    @JoinColumn
+        作用：用于定义主键字段和外键字段的对应关系。
+        属性：
+            name：指定外键字段的名称
+            referencedColumnName：指定引用主表的主键字段名称
+            unique：是否唯一。默认值不唯一
+            nullable：是否允许为空。默认值允许。
+            insertable：是否允许插入。默认值允许。
+            updatable：是否允许更新。默认值允许。
+            columnDefinition：列的定义信息。
+     */
+
     @Test
+    @Transactional
+    @Rollback(false)//设置为不回滚
     public void save(){
+        User user = new User();
+        //Role role = new Role();
+        user.setPassword(10086+"");
+        Role role1 = new Role();
+        role1.setNameZH("dcw");
+        //Role role2 = roleDao.findById(2).get();
+
+        System.out.println(role1);
+        //System.out.println(role2);
+
+        user.getRoles().add(role1);
+        //user.getRoles().add(role2);
+        role1.getUsers().add(user);
+        //role2.getUsers().add(user);
 
 
 
+
+        roleDao.save(role1);
+        //roleDao.save(role2);
+        userDao.save(user);
 
 
     }
