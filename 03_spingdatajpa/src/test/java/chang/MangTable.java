@@ -12,7 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.Set;
 
 /*
 
@@ -124,29 +124,74 @@ public class MangTable {
     @Rollback(false)//设置为不回滚
     public void save(){
         User user = new User();
-        //Role role = new Role();
-        user.setPassword(10086+"");
-        Role role1 = new Role();
-        role1.setNameZH("dcw");
-        //Role role2 = roleDao.findById(2).get();
+        Role role1 = roleDao.findById(1).get();
+        Role role2 = roleDao.findById(2).get();
 
         System.out.println(role1);
-        //System.out.println(role2);
+        System.out.println(role2);
 
         user.getRoles().add(role1);
-        //user.getRoles().add(role2);
-        role1.getUsers().add(user);
-        //role2.getUsers().add(user);
-
-
+        user.getRoles().add(role2);
 
 
         roleDao.save(role1);
-        //roleDao.save(role2);
+        roleDao.save(role2);
         userDao.save(user);
 
+        /*
+        User u1 = new User();
+        u1.setUsername("用户1");
+        Role r1 = new Role();
+        r1.setNameZH("角色1");
+        //建立关联关系
+        u1.getRoles().add(r1);
+        r1.getUsers().add(u1);
+        //保存
+        roleDao.save(r1);
+        userDao.save(u1);
+
+
+         */
+    }
+
+
+    @Test
+    @Transactional
+    @Rollback(false)//设置为不回滚
+    public void testDelete() {
+        //userDao.deleteById(7);
+        userDao.deleteById(17);
+        //userDao.deleteById(9);
+    }
+
+    @Test
+    @Transactional
+    public void testFind() {
+        User customer = userDao.findById(18).get();
+        Set<Role> linkMans = customer.getRoles();//对象导航查询
+        for (Role linkMan : linkMans) {
+            System.out.println(linkMan);
+        }
 
     }
+
+
+    /*
+
+	在客户对象的@OneToMany注解中添加fetch属性
+	 		FetchType.EAGER	：立即加载
+	  		FetchType.LAZY	：延迟加载
+
+    @OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+    private Set<LinkMan> linkMans = new HashSet<>(0);
+
+     */
+
+
+
+
+
+
 
 
 }

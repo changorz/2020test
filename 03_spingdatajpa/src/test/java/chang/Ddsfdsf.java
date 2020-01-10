@@ -1,6 +1,8 @@
 package chang;
 
+import chang.dao.RoleDao;
 import chang.dao.UserDao;
+import chang.domain.Role;
 import chang.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -20,6 +23,9 @@ public class Ddsfdsf {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Test
     public void save1(){
@@ -70,6 +76,17 @@ public class Ddsfdsf {
             return cb.like(root.get("username").as(String.class), "%a%");
         }, PageRequest.of(0, 5));
         username.forEach(System.out::print);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(false)//设置为不回滚
+    public void saverole(){
+        Role role = new Role();
+        role.setName("aaa");
+        role.setNameZH("bbb");
+        roleDao.save(role);
+
     }
 
 
