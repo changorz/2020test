@@ -9,4 +9,5 @@ public interface WxAutoResposeDao extends JpaRepository<WxAutoRespose,Integer>, 
     WxAutoRespose findByMsgTypeAndReq(String msgType , String req);
 
 
+    WxAutoRespose findByReq(String req);
 }
